@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark — Brunch, Bites & Bar | El Poblado, Medellín</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --midnight-onyx: #1A1A1A;
+            --warm-ivory: #FAF2EE;
+            --soft-gold: #BEA166;
+            --burnt-terracotta: #C54716;
+            --primary-font: 'EB Garamond', serif;
+            --secondary-font: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--secondary-font);
+            color: var(--midnight-onyx);
+            background-color: var(--warm-ivory);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Shapes */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.05;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--burnt-terracotta);
+            border-radius: 50%;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--soft-gold);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            top: 60%;
+            right: 15%;
+            animation-delay: 5s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--burnt-terracotta);
+            border-radius: 50%;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, -30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-20px, 20px) rotate(180deg);
+            }
+            75% {
+                transform: translate(20px, 30px) rotate(270deg);
+            }
+        }
+
+        /* Floating Navigation */
+        .nav-float {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            border-radius: 50px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards;
+            animation-delay: 0.3s;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .nav-logo-float {
+            font-family: var(--primary-font);
+            font-size: 1.5rem;
+            color: var(--soft-gold);
+            font-weight: 600;
+        }
+
+        .nav-links-float {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link-float {
+            color: var(--warm-ivory);
+            text-decoration: none;
+            font-size: 0.85rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link-float::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--soft-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-float:hover {
+            color: var(--soft-gold);
+        }
+
+        .nav-link-float:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn-float {
+            background: var(--burnt-terracotta);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn-float:hover {
+            background: #A33A12;
+            transform: scale(1.05);
+        }
+
+        /* Hero with Animations */
+        .hero-animated {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-animated-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .animated-badge {
+            display: inline-block;
+            background: var(--soft-gold);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .animated-title {
+            font-family: var(--primary-font);
+            font-size: 8rem;
+            font-weight: 700;
+            
+            background: linear-gradient(135deg, var(--midnight-onyx) 0%, var(--burnt-terracotta) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInScale 1s ease forwards;
+            animation-delay: 0.8s;
+            position: relative;
+        }
+
+        .animated-title::before {
+            content: 'Spark';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--soft-gold) 0%, var(--burnt-terracotta) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.3; }
+        }
+
+        .animated-subtitle {
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--midnight-onyx);
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 1.1s;
+        }
+
+        .animated-description {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            line-height: 1.9;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 1.4s;
+        }
+
+        .animated-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 1.7s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .btn-animated {
+            padding: 18px 45px;
+            font-family: var(--secondary-font);
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .btn-primary-animated {
+            background: var(--burnt-terracotta);
+            color: white;
+            box-shadow: 0 10px 30px rgba(197, 71, 22, 0.3);
+        }
+
+        .btn-primary-animated::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary-animated:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary-animated:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(197, 71, 22, 0.4);
+        }
+
+        .btn-secondary-animated {
+            background: transparent;
+            color: var(--midnight-onyx);
+            border: 2px solid var(--midnight-onyx);
+        }
+
+        .btn-secondary-animated:hover {
+            background: var(--midnight-onyx);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Scroll Reveal Sections */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animated Cards Section */
+        .cards-section {
+            padding: 120px 40px;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label-animated {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--burnt-terracotta);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .section-title-animated {
+            font-family: var(--primary-font);
+            font-size: 4rem;
+            color: var(--midnight-onyx);
+            margin-bottom: 20px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .animated-card {
+            background: var(--warm-ivory);
+            padding: 50px 40px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .animated-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--soft-gold) 0%, var(--burnt-terracotta) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .animated-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .animated-card:hover::before {
+            opacity: 0.95;
+        }
+
+        .animated-card:hover .card-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .animated-card:hover .card-title,
+        .animated-card:hover .card-text {
+            color: white;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-family: var(--primary-font);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--midnight-onyx);
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 120px 40px;
+            background: var(--warm-ivory);
+            text-align: center;
+        }
+
+        .menu-section .section-label-animated {
+            color: var(--soft-gold);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .menu-section .section-title-animated {
+            font-family: var(--primary-font);
+            font-size: 4rem;
+            color: var(--midnight-onyx);
+            margin-bottom: 60px;
+            line-height: 1.1;
+        }
+
+        .menu-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .menu-item.visible {
+            opacity: 1;
+            width:100%;
+            transform: translateY(0);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .menu-item-title {
+            padding: 25px;
+            display:none;
+            font-family: var(--primary-font);
+            font-size: 1.8rem;
+            color: var(--midnight-onyx);
+            background: white;
+        }
+
+        /* Parallax Section */
+        .parallax-section {
+            height: 600px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 100px);
+            background-image: url('../barback.png');
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.1s ease-out;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(197, 71, 22, 0.6) 100%);
+        }
+
+        .parallax-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 40px;
+        }
+
+        .parallax-quote {
+            font-family: var(--primary-font);
+            font-size: 3.5rem;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 30px;
+            animation: fadeInScale 1s ease;
+        }
+
+        .parallax-author {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Stagger Animation Grid */
+        .stagger-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stagger-item {
+            background: white;
+            padding: 40px;
+            border-left: 4px solid var(--soft-gold);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .stagger-item.animate {
+            animation: slideInLeft 0.6s ease forwards;
+        }
+
+        .stagger-item:nth-child(1).animate { animation-delay: 0.1s; }
+        .stagger-item:nth-child(2).animate { animation-delay: 0.2s; }
+        .stagger-item:nth-child(3).animate { animation-delay: 0.3s; }
+        .stagger-item:nth-child(4).animate { animation-delay: 0.4s; }
+        .stagger-item:nth-child(5).animate { animation-delay: 0.5s; }
+        .stagger-item:nth-child(6).animate { animation-delay: 0.6s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .stagger-item:hover {
+            border-left-color: var(--burnt-terracotta);
+            transform: translateX(10px);
+            box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stagger-number {
+            font-family: var(--primary-font);
+            font-size: 3rem;
+            color: var(--burnt-terracotta);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .stagger-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--midnight-onyx);
+        }
+
+        .stagger-text {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Rotating Info Section */
+        .rotating-section {
+            padding: 120px 40px;
+            background: var(--midnight-onyx);
+            color: white;
+        }
+
+        .rotating-cards {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .rotating-card {
+            width: 300px;
+            height: 350px;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .rotating-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .card-front {
+            background: var(--soft-gold);
+            color: var(--midnight-onyx);
+        }
+
+        .card-back {
+            background: var(--burnt-terracotta);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-front-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .card-front-title {
+            font-family: var(--primary-font);
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .card-back-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Pulse Button Section */
+        .cta-section {
+            padding: 120px 40px;
+            background: var(--warm-ivory);
+            text-align: center;
+        }
+
+        .pulse-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 25px 60px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: var(--burnt-terracotta);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            position: relative;
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 40px rgba(197, 71, 22, 0.4);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 10px 40px rgba(197, 71, 22, 0.4);
+            }
+            50% {
+                box-shadow: 0 10px 60px rgba(197, 71, 22, 0.6);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 10px 40px rgba(197, 71, 22, 0.4);
+            }
+        }
+
+        .pulse-btn::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--burnt-terracotta);
+            border-radius: 50px;
+            opacity: 0;
+            animation: ripple 2s infinite;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
+        .footer-animated {
+            background: var(--midnight-onyx);
+            color: var(--warm-ivory);
+            padding: 80px 40px 40px;
+            text-align: center;
+        }
+
+        .footer-logo-animated {
+            font-family: var(--primary-font);
+            font-size: 4rem;
+            color: var(--soft-gold);
+            margin-bottom: 20px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(190, 161, 102, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(190, 161, 102, 0.8);
+            }
+        }
+
+        .footer-social-animated {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .social-icon-animated {
+            width: 50px;
+            height: 50px;
+            background: rgba(190, 161, 102, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--soft-gold);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-animated:hover {
+            background: var(--soft-gold);
+            color: var(--midnight-onyx);
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-float {
+                padding: 12px 20px;
+                gap: 15px;
+            }
+
+            .nav-links-float {
+                display: none;
+            }
+
+            .animated-title {
+                font-size: 4rem;
+            }
+
+            .animated-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title-animated {
+                font-size: 2.5rem;
+            }
+
+            .menu-section {
+                padding: 80px 30px;
+            }
+
+            .menu-section .section-title-animated {
+                font-size: 2.5rem;
+            }
+
+            .menu-images {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+
+            .parallax-quote {
+                font-size: 2rem;
+            }
+
+            .rotating-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .animated-cta {
+                flex-direction: column;
+            }
+
+            .btn-animated {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Shapes -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Floating Navigation -->
+    <nav class="nav-float">
+        <div class="nav-logo-float"><img src="SPARK_Logo.png" alt="Spark" style="max-height: 2.5rem; width: auto;"></div>
+        <div class="nav-links-float">
+            <a href="#about" class="nav-link-float">About</a>
+            <a href="#menu" class="nav-link-float">Menu</a>
+            <a href="#hours" class="nav-link-float">Hours</a>
+            <a href="#contact" class="nav-link-float">Contact</a>
+        </div>
+        <a href="https://wa.me/573013135291" class="nav-btn-float" target="_blank">Reserve</a>
+    </nav>
+
+    <!-- Hero Section with Animations -->
+    <section class="hero-animated">
+        <div class="hero-animated-content">
+            <div class="animated-badge">🌅 Soft Opening — Now Serving</div>
+            <h1 class="animated-title"><img src="SPARK_Logo.png" alt="Spark" style="max-height: 14rem; width: auto;"></h1>
+            <p class="animated-subtitle">Brunch, Bites & Bar</p>
+            <p class="animated-description">
+                El Poblado's newest brunch destination. Experience simple, delicious breakfasts 
+                with exceptional coffee in a calm, welcoming atmosphere.
+            </p>
+            <div class="animated-cta">
+                <a href="https://wa.me/573013135291" class="btn-animated btn-primary-animated" target="_blank">
+                    💬 Reserve on WhatsApp
+                </a>
+                <a href="https://instagram.com/spark.medellin" class="btn-animated btn-secondary-animated" target="_blank">
+                    📸 Follow Our Journey
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animated Cards Section -->
+    <!-- Menu Section -->
+    <section class="menu-section reveal-section" id="menu">
+        <div class="section-header">
+            <div class="section-label-animated">Our Menu</div>
+            <h2 class="section-title-animated">Brunch & Drinks</h2>
+        </div>
+        <div class="menu-images">
+            <div class="menu-item">
+                <img src="menu.jpg" alt="Spark Brunch Menu">
+                <div class="menu-item-title">Food Menu</div>
+            </div>
+            <div class="menu-item">
+                <img src="menu-drinks.jpg" alt="Spark Drinks Menu">
+                <div class="menu-item-title">Drinks Menu</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax-section" id="parallax">
+        <div class="parallax-bg"></div>
+        <div class="parallax-overlay"></div>
+        <div class="parallax-content">
+            <p class="parallax-quote">"Great coffee, calm vibe, perfect mornings"</p>
+            <p class="parallax-author">— Spark Experience</p>
+        </div>
+    </section>
+
+    <!-- About Section with Stagger Animation -->
+    <section class="cards-section reveal-section" id="about">
+        <div class="section-header">
+            <div class="section-label-animated">Why Spark</div>
+            <h2 class="section-title-animated">What Makes Us Special</h2>
+        </div>
+        <div class="stagger-grid">
+            <div class="stagger-item">
+                <div class="stagger-number">7am</div>
+                <div class="stagger-title">We Open Early</div>
+                <p class="stagger-text">Daily service starting bright and early to fuel your morning.</p>
+            </div>
+            <div class="stagger-item">
+                <div class="stagger-number">Fresh</div>
+                <div class="stagger-title">Made to Order</div>
+                <p class="stagger-text">Everything prepared fresh when you order, never sitting around.</p>
+            </div>
+            <div class="stagger-item">
+                <div class="stagger-number">Fast</div>
+                <div class="stagger-title">Quick Service</div>
+                <p class="stagger-text">Efficient service without sacrificing quality or care.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rotating Cards Section -->
+    <section class="rotating-section" id="hours">
+        <div class="section-header">
+            <div class="section-label-animated" style="color: var(--soft-gold);">Essential Info</div>
+            <h2 class="section-title-animated" style="color: white;">Hours & Location</h2>
+        </div>
+        <div class="rotating-cards">
+            <div class="rotating-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-front-icon">⏰</div>
+                        <div class="card-front-title">Hours</div>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-back-text">
+                            <strong>Daily</strong><br>
+                            7:00am – 12:00pm<br><br>
+                            Currently brunch only during soft opening. Hours will expand soon!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="rotating-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-front-icon">📍</div>
+                        <div class="card-front-title">Location</div>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-back-text">
+                            Carrera 37a #8a-38<br>
+                            Poblado, Medellín<br><br>
+                            Near Provenza & Epic Boutique Hotel
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="rotating-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-front-icon">✨</div>
+                        <div class="card-front-title">Vibe</div>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-back-text">
+                            Calm atmosphere<br>
+                            Great coffee<br>
+                            Quick service<br>
+                            Good vibes only
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section reveal-section" id="contact">
+        <div class="section-header">
+            <div class="section-label-animated">Ready to Visit?</div>
+            <h2 class="section-title-animated">Reserve Your Table</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Fastest response is on WhatsApp. Message us for reservations or questions about today's menu.
+            </p>
+        </div>
+        <a href="https://wa.me/573013135291" class="pulse-btn" target="_blank">
+            💬 Message on WhatsApp
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-animated">
+        <div class="footer-logo-animated"><img src="SPARK_Logo.png" alt="Spark" style="max-height: 4.5rem; width: auto;"></div>
+        <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; opacity: 0.8; margin-bottom: 40px;">
+            Brunch, Bites & Bar
+        </p>
+        <div class="footer-social-animated">
+            <a href="https://instagram.com/spark.medellin" class="social-icon-animated" target="_blank">📸</a>
+            <a href="https://wa.me/573013135291" class="social-icon-animated" target="_blank">💬</a>
+            <a href="https://www.google.com/maps/place/Carrera+37a+%238a-38,+Poblado,+Medellín" class="social-icon-animated" target="_blank">📍</a>
+        </div>
+        <p style="opacity: 0.5; font-size: 0.85rem; margin-top: 40px;">
+            © 2026 Spark · Medellín · Carrera 37a #8a-38, Poblado
+        </p>
+    </footer>
+
+    <script>
+        // Scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Stagger animation trigger
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.stagger-item').forEach(item => {
+                        item.classList.add('animate');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const staggerGrid = document.querySelector('.stagger-grid');
+        if (staggerGrid) {
+            staggerObserver.observe(staggerGrid);
+        }
+
+        // Menu items animation
+        const menuObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.menu-item').forEach(item => {
+            menuObserver.observe(item);
+        });
+
+        // Parallax effect
+        const parallaxBg = document.querySelector('.parallax-bg');
+        if (parallaxBg) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxSection = document.querySelector('.parallax-section');
+                if (parallaxSection) {
+                    const sectionTop = parallaxSection.offsetTop;
+                    const sectionHeight = parallaxSection.offsetHeight;
+                    
+                    if (scrolled > sectionTop - window.innerHeight && scrolled < sectionTop + sectionHeight) {
+                        const yPos = (scrolled - sectionTop) * 0.5;
+                        parallaxBg.style.transform = `translateY(${yPos}px)`;
+                    }
+                }
+            });
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
