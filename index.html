@@ -506,7 +506,7 @@
             flex-direction: column;
             align-items: center;
             gap: 40px;
-            max-width: 800px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -536,6 +536,30 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        .menu-pdf {
+            width: 100%;
+            display: grid;
+            gap: 24px;
+        }
+
+        .menu-pdf-page {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: white;
+        }
+
+        .menu-pdf-fallback {
+            padding: 30px;
+            text-align: center;
+            font-family: var(--secondary-font);
+        }
+
+        .menu-pdf-fallback a {
+            color: var(--burnt-terracotta);
+            font-weight: 600;
         }
 
         .menu-item-title {
@@ -888,6 +912,10 @@
                 padding: 0 10px;
             }
 
+            .menu-pdf {
+                gap: 16px;
+            }
+
             .parallax-quote {
                 font-size: 2rem;
             }
@@ -958,12 +986,11 @@
         </div>
         <div class="menu-images">
             <div class="menu-item">
-                <img src="assets/menu.jpg" alt="Spark Brunch Menu">
-                <div class="menu-item-title">Food Menu</div>
-            </div>
-            <div class="menu-item">
-                <img src="assets/menu-drinks.jpg" alt="Spark Drinks Menu">
-                <div class="menu-item-title">Drinks Menu</div>
+                <div class="menu-pdf" id="menu-pdf" aria-label="Spark menu pages">
+                    <div class="menu-pdf-fallback">
+                        <p>Loading the <a href="assets/carta.pdf" target="_blank" rel="noopener">Spark menu</a>...</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1089,7 +1116,27 @@
         </p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const menuPdf = document.querySelector('#menu-pdf');
+        pdfjsLib.getDocument('assets/carta.pdf').promise.then(async (pdf) => {
+            menuPdf.replaceChildren();
+
+            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+                const page = await pdf.getPage(pageNumber);
+                const baseViewport = page.getViewport({ scale: 1 });
+                const viewport = page.getViewport({ scale: menuPdf.clientWidth / baseViewport.width });
+                const canvas = document.createElement('canvas');
+                canvas.className = 'menu-pdf-page';
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                menuPdf.appendChild(canvas);
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            }
+        });
+
         // Scroll reveal animations
         const observerOptions = {
             threshold: 0.1,
