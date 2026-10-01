@@ -515,16 +515,8 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .menu-item.visible {
-            opacity: 1;
-            width:100%;
-            transform: translateY(0);
         }
 
         .menu-item:hover {
@@ -979,7 +971,7 @@
 
     <!-- Animated Cards Section -->
     <!-- Menu Section -->
-    <section class="menu-section reveal-section" id="menu">
+    <section class="menu-section" id="menu">
         <div class="section-header">
             <div class="section-label-animated">Our Menu</div>
             <h2 class="section-title-animated">Brunch & Drinks</h2>
@@ -987,9 +979,10 @@
         <div class="menu-images">
             <div class="menu-item">
                 <div class="menu-pdf" id="menu-pdf" aria-label="Spark menu pages">
-                    <div class="menu-pdf-fallback">
-                        <p>Loading the <a href="assets/carta.pdf" target="_blank" rel="noopener">Spark menu</a>...</p>
-                    </div>
+                    <img class="menu-pdf-page" src="assets/menu-page-00.jpg" alt="Spark menu page 1">
+                    <img class="menu-pdf-page" src="assets/menu-page-01.jpg" alt="Spark menu page 2" loading="lazy">
+                    <img class="menu-pdf-page" src="assets/menu-page-02.jpg" alt="Spark menu page 3" loading="lazy">
+                    <img class="menu-pdf-page" src="assets/menu-page-03.jpg" alt="Spark menu page 4" loading="lazy">
                 </div>
             </div>
         </div>
@@ -1116,27 +1109,7 @@
         </p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-        const menuPdf = document.querySelector('#menu-pdf');
-        pdfjsLib.getDocument('assets/carta.pdf').promise.then(async (pdf) => {
-            menuPdf.replaceChildren();
-
-            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-                const page = await pdf.getPage(pageNumber);
-                const baseViewport = page.getViewport({ scale: 1 });
-                const viewport = page.getViewport({ scale: menuPdf.clientWidth / baseViewport.width });
-                const canvas = document.createElement('canvas');
-                canvas.className = 'menu-pdf-page';
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-                menuPdf.appendChild(canvas);
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-            }
-        });
-
         // Scroll reveal animations
         const observerOptions = {
             threshold: 0.1,
@@ -1170,19 +1143,6 @@
         if (staggerGrid) {
             staggerObserver.observe(staggerGrid);
         }
-
-        // Menu items animation
-        const menuObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.menu-item').forEach(item => {
-            menuObserver.observe(item);
-        });
 
         // Parallax effect
         const parallaxBg = document.querySelector('.parallax-bg');
