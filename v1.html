@@ -411,11 +411,10 @@
         .chips a:hover { border-color: var(--terracotta); color: var(--terracotta); }
         .chips a.active { background: var(--ink); border-color: var(--ink); color: var(--paper-light); }
 
-        /* Food photo treatment: blend the paper out of the photo */
+        /* Food photos use clean rectangular crops with rounded corners. */
         .dish-photo {
-            mix-blend-mode: multiply;
-            -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
-            mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
+            display: block;
+            border-radius: 12px;
             transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
         }
 
@@ -450,7 +449,9 @@
             padding-bottom: 34px;
             border-bottom: 1px solid var(--gold-soft);
         }
-        .starter:hover .dish-photo { transform: scale(1.05) rotate(-2deg); }
+        .starter.no-photo { grid-template-columns: 1fr; }
+        .starter .dish-photo { width: 100%; aspect-ratio: 1; object-fit: cover; }
+        .starter:hover .dish-photo { transform: scale(1.05); }
         .starter h3, .burger h3 {
             font-family: var(--font-display);
             font-weight: 400;
@@ -478,7 +479,7 @@
         .brunch-item { display: flex; flex-direction: column; }
         .brunch-item .photo-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
         .brunch-item .dish-photo { width: 78%; aspect-ratio: 1.45; object-fit: cover; }
-        .brunch-item:hover .dish-photo { transform: scale(1.06) rotate(3deg); }
+        .brunch-item:hover .dish-photo { transform: scale(1.06); }
         .brunch-head { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
         .brunch-item h3 {
             font-family: var(--font-serif);
@@ -530,11 +531,7 @@
             width: 82%;
             margin: 0 auto 14px;
             aspect-ratio: 1;
-            object-fit: contain;
-            mix-blend-mode: normal;
-            -webkit-mask-image: none;
-            mask-image: none;
-            filter: drop-shadow(0 18px 18px rgba(74, 45, 20, 0.22));
+            object-fit: cover;
         }
         .burger p { font-size: 0.92rem; color: var(--ink-soft); }
         .burger p.es { border-top: 1px dotted var(--gold); padding-top: 8px; margin-top: 8px; color: var(--ink); }
@@ -858,7 +855,7 @@
 
                 <div class="starters">
                     <article class="starter reveal">
-                        <img class="dish-photo" src="assets/v1/chicharron.jpg" alt="Chicharrón glaseado en tamarindo" loading="lazy">
+                        <img class="dish-photo" src="assets_named/chicharron-tamarindo.png" alt="Chicharrón glaseado en tamarindo" loading="lazy">
                         <div>
                             <h3>Chicharrón glaseado en tamarindo</h3>
                             <p>Crocante chicharrón de cocción lenta, lacado en reducción de tamarindo, acompañado de patacones dorados y cremoso guacamole artesanal.</p>
@@ -866,8 +863,7 @@
                             <div class="price">$28.000</div>
                         </div>
                     </article>
-                    <article class="starter reveal">
-                        <img class="dish-photo" src="assets/v1/fritos.jpg" alt="Fritos típicos" loading="lazy">
+                    <article class="starter reveal no-photo">
                         <div>
                             <h3>Fritos típicos</h3>
                             <p>Fritos típicos colombianos, papas rellenas de carne de res, pasteles de pollo acompañado de salsa artesanal.</p>
@@ -876,7 +872,7 @@
                         </div>
                     </article>
                     <article class="starter reveal">
-                        <img class="dish-photo" src="assets/v1/tostadas-cherry.jpg" alt="Tostadas, queso cremoso y cherry confitado" loading="lazy">
+                        <img class="dish-photo" src="assets_named/tostadas-cherry.png" alt="Tostadas con queso cremoso y cherry confitado" loading="lazy">
                         <div>
                             <h3>Tostadas, queso cremoso y cherry confitado</h3>
                             <p>Crujientes tostadas artesanales coronadas con queso crema suave y tomates cherry confitados en aceite de oliva y hierbas, con un delicado balance entre dulzor y acidez.</p>
@@ -885,7 +881,7 @@
                         </div>
                     </article>
                     <article class="starter reveal">
-                        <img class="dish-photo" src="assets/v1/falafel.jpg" alt="Falafel artesanal de lentejas y hummus" loading="lazy">
+                        <img class="dish-photo" src="assets_named/falafel-lentejas.png" alt="Falafel artesanal de lentejas y hummus" loading="lazy">
                         <div>
                             <h3>Falafel artesanal de lentejas &amp; hummus</h3>
                             <p>Falafel dorado de lentejas especiadas, servido sobre un hummus de garbanzos extra cremoso con notas de tahini y aceite de oliva.</p>
@@ -916,55 +912,49 @@
 
                 <div class="brunch-grid">
                     <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/waffles.jpg" alt="Waffles de yuca" loading="lazy"></div>
+                        <div class="photo-wrap"><img class="dish-photo" src="assets_named/waffles-yuca.png" alt="Waffles de yuca" loading="lazy"></div>
                         <div class="brunch-head"><h3>Waffles de Yuca</h3><span class="price">$38.000</span></div>
                         <p>Golden and soft yuca waffles, served with scrambled eggs, crispy tocineta and fresh avocado.</p>
                         <p class="es">Waffles dorados y suaves de yuca, servidos con huevos revueltos, tocineta crujiente y aguacate fresco.</p>
                     </article>
-                    <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/crepe-bechamel.jpg" alt="Crepe de pollo en bechamel" loading="lazy"></div>
+                    <article class="brunch-item reveal no-photo">
                         <div class="brunch-head"><h3>Crepe de Pollo en Bechamel Clásica</h3><span class="price">$32.000</span></div>
                         <p>Thin chicken crepe filled and topped with creamy bechamel sauce and a touch of nutmeg.</p>
                         <p class="es">Fina crepe rellena de pollo, cubierta con cremosa salsa bechamel y un toque de nuez moscada.</p>
                     </article>
-                    <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/spring-bowl.jpg" alt="Spring bowl" loading="lazy"></div>
+                    <article class="brunch-item reveal no-photo">
                         <div class="brunch-head"><h3>Spring Bowl</h3><span class="price">$35.000</span></div>
                         <p>Greek yogurt bowl with fresh seasonal fruits and artisan jam. Choose granola or oats.</p>
                         <p class="es">Bowl con yogurt griego, frutas de temporada y mermelada artesanal. Elige granola o avena.</p>
                     </article>
-                    <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/crepe-curry.jpg" alt="Crepe de pollo al curry" loading="lazy"></div>
+                    <article class="brunch-item reveal no-photo">
                         <div class="brunch-head"><h3>Crepe de Pollo al Curry</h3><span class="price">$38.000</span></div>
                         <p>Delicious chicken crepe in a mild curry sauce with warm spices and exotic touches.</p>
                         <p class="es">Deliciosa crepe rellena de pollo en salsa de curry suave, con especias cálidas y toques exóticos.</p>
                     </article>
                     <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/pancakes.jpg" alt="Pancakes" loading="lazy"></div>
+                        <div class="photo-wrap"><img class="dish-photo" src="assets_named/pancakes.jpeg" alt="Pancakes con fruta fresca y tocineta" loading="lazy"></div>
                         <div class="brunch-head"><h3>Pancakes</h3><span class="price">$32.000</span></div>
                         <p>Fluffy pancakes served with fresh seasonal fruit and crispy tocineta.</p>
                         <p class="es">Pancakes esponjosos servidos con fruta fresca de temporada y tocineta crujiente.</p>
                     </article>
-                    <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/crepe-nutella.jpg" alt="Crepe de Nutella con banano" loading="lazy"></div>
+                    <article class="brunch-item reveal no-photo">
                         <div class="brunch-head"><h3>Crepe de Nutella con Banano</h3><span class="price">$19.000</span></div>
                         <p>Thin crepe filled with creamy Nutella and banana slices, with a touch of sweetness to enhance the flavor.</p>
                         <p class="es">Delicada crepe artesanal rellena de cremosa Nutella y láminas de banano fresco, con un sutil toque dulce.</p>
                     </article>
                     <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/tostadas-francesas.jpg" alt="Tostadas francesas" loading="lazy"></div>
+                        <div class="photo-wrap"><img class="dish-photo" src="assets_named/tostadas-francesas.jpeg" alt="Tostadas francesas" loading="lazy"></div>
                         <div class="brunch-head"><h3>Tostadas Francesas</h3><span class="price">$35.000</span></div>
                         <p>Soft French toast served with maple syrup, fresh seasonal fruit and a touch of powdered sugar.</p>
                         <p class="es">Tostadas francesas ligeramente dulces, servidas con sirope de maple, fruta de temporada y un toque de azúcar.</p>
                     </article>
-                    <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/calentado.jpg" alt="Calentado paisa" loading="lazy"></div>
+                    <article class="brunch-item reveal no-photo">
                         <div class="brunch-head"><h3>Calentado Paisa</h3><span class="price">$42.000</span></div>
                         <p>Traditional Colombian mix of beans, rice, two arepas, egg, avocado, savory suero costeño, chorizo and chicharrón.</p>
-                        <p class="es">Mezcla tradicional de frijoles y arroz, servida con dos arepas, huevo, aguacate, suero costeño, chorizo y cueros fritos.</p>
+                        <p class="es">Mezcla tradicional de frijoles y arroz, servida con dos arepas, huevo, aguacate, suero costeño, chorizo y chicharrón.</p>
                     </article>
-                    <article class="brunch-item reveal">
-                        <div class="photo-wrap"><img class="dish-photo" src="assets/v1/huevos.jpg" alt="Huevos al gusto" loading="lazy"></div>
+                    <article class="brunch-item reveal no-photo">
                         <div class="brunch-head"><h3>Huevos al gusto</h3><span class="price">$25.000</span></div>
                         <p>Prepared to your liking, with rustic artisan brioche bread and house-made jam. Includes one topping.</p>
                         <p class="es">Preparados al momento a tu gusto, con pan brioche artesanal y mermelada de la casa. Incluye un topping.</p>
@@ -985,23 +975,21 @@
                     </h2>
                     <div class="burgers">
                         <article class="burger reveal">
-                            <img class="dish-photo" src="assets/v1/burger-tradicional.webp" alt="Burger tradicional" loading="lazy">
+                            <img class="dish-photo" src="assets_named/hamburguesa-tradicional.jpeg" alt="Hamburguesa tradicional" loading="lazy">
                             <h3>Tradicional</h3>
                             <p>Brioche bun, 150 g beef patty, cheddar cheese, lettuce, tomato, red onion and house sauce.</p>
                             <p class="es">Pan brioche, carne 150 g, queso cheddar, lechuga, tomate, cebolla morada y salsa de la casa.</p>
                             <div class="spacer"></div>
                             <div class="price">$36.000</div>
                         </article>
-                        <article class="burger reveal">
-                            <img class="dish-photo" src="assets/v1/burger-bacon.webp" alt="Burger bacon and cheese" loading="lazy">
+                        <article class="burger reveal no-photo">
                             <h3>Bacon &amp; Cheese</h3>
                             <p>Brioche bun, 150 g beef patty, cheddar cheese, crispy bacon, crispy onion, pickle and house sauce.</p>
                             <p class="es">Pan brioche, carne 150 g, queso cheddar, tocineta crujiente, cebolla crispy, pickle y salsa de la casa.</p>
                             <div class="spacer"></div>
                             <div class="price">$39.000</div>
                         </article>
-                        <article class="burger reveal">
-                            <img class="dish-photo" src="assets/v1/burger-smash.webp" alt="Smash Spark burger" loading="lazy">
+                        <article class="burger reveal no-photo">
                             <h3>Smash Spark</h3>
                             <p>Double smash beef patty, cheddar cheese, sautéed onion, pickles, lettuce and spark sauce.</p>
                             <p class="es">Doble carne smash, queso cheddar, cebolla salteada, pepinillos, lechuga y salsa spark.</p>
@@ -1017,8 +1005,7 @@
                         Sandwiches
                     </h2>
                     <div class="burgers">
-                        <article class="burger reveal">
-                            <img class="dish-photo" src="assets/v1/pulled-pork.webp" alt="Sandwich pulled pork" loading="lazy">
+                        <article class="burger reveal no-photo">
                             <h3>Pulled Pork</h3>
                             <p>Slow-cooked pulled pork in BBQ sauce, coleslaw, pickles and house sauce.</p>
                             <p class="es">Cerdo desmechado en salsa BBQ, coleslaw, pepinillos y salsa de la casa.</p>
@@ -1026,7 +1013,7 @@
                             <div class="price">$34.000</div>
                         </article>
                         <article class="burger reveal">
-                            <img class="dish-photo" src="assets/v1/roast-beef.webp" alt="Sandwich roast beef" loading="lazy">
+                            <img class="dish-photo" src="assets_named/sanduche-roast-beef.jpeg" alt="Sándwich de roast beef" loading="lazy">
                             <h3>Roast Beef</h3>
                             <p>Roast beef, arugula, parmesan cheese, roasted tomato and garlic mayo.</p>
                             <p class="es">Roast beef, rúgula, queso parmesano, tomate asado y mayo de ajo.</p>
@@ -1034,7 +1021,7 @@
                             <div class="price">$36.000</div>
                         </article>
                         <article class="burger reveal">
-                            <img class="dish-photo" src="assets/v1/pollo-crispy.webp" alt="Sandwich pollo crispy" loading="lazy">
+                            <img class="dish-photo" src="assets_named/sanduche-pollo-crispy.jpeg" alt="Sándwich de pollo crispy" loading="lazy">
                             <h3>Pollo Crispy</h3>
                             <p>Crispy chicken, lettuce, tomato, cheddar cheese and chipotle mayo.</p>
                             <p class="es">Pollo crispy, lechuga, tomate, queso cheddar y mayo chipotle.</p>
